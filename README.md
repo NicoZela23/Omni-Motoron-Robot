@@ -87,7 +87,7 @@ Con esto tendremos disponible toda la libreria junto con ejemplos de uso para lo
 ## Descarga
 
 > [!IMPORTANT]
-> Ya que esta libreria es especifica del fabricante `Pololu` para poder hacer uso de la libreria `motoron` debemos clonar este proyecto y extrar el script `robot.py` dentro de los archivos de la carpeta `motoron-python` donde se encuentran disponibles los archivos core
+> Ya que esta libreria es especifica del fabricante `Pololu` para poder hacer uso de la libreria `motoron` debemos clonar este proyecto y extraer el script `robot.py` dentro de los archivos de la carpeta `motoron-python` donde se encuentran disponibles los archivos core
 
 ```
 $ cd project_library
@@ -119,7 +119,7 @@ La configuracion mas crucial del proyecto recaera en el uso del mismo siendo las
 
 ## Uso
 
-La ejecucion del proyecto se hara mediante el script mismo que accionara movimientos de calibracion en el brazo para despues abrir una ventada que muestre los cuadrantes a los cuales se tomara para el movimiento del objeto
+La ejecucion del proyecto se hara mediante el script mismo que accionara movimientos de calibracion en los motores para despues abrir la terminal para poder realizar las acciones pre configuradas
 
 [Maintained-shield]: https://img.shields.io/badge/Maintained%3F-yes-green.svg
 [Forks-shield]: https://img.shields.io/github/forks/NicoZela23/Omni-Motoron-Robot.svg
