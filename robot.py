@@ -8,7 +8,7 @@ import select
 
 # --- CONFIGURACIÓN MOTORON ---
 try:
-    mc1 = motoron.MotoronI2C(address=16)
+    mc1 = motoron.MotoronI2C(address=17)
 except Exception as e:
     print(f"Error inicializando Motoron. Verifica la conexión I2C. Error: {e}")
     exit()

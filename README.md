@@ -42,6 +42,7 @@
     <li><a href="#configuracion-del-robot">Configuracion del robot</li>
     <li><a href="#tech-stack">Tech Stack</a></li>
     <li><a href="#descripcion-tecnica">Descripcion tecnica</a></li>
+    <li><a href="#video-funcionamiento">Video funcionamiento</a></li>
   </ol>
 </details>
 
@@ -50,7 +51,7 @@
 `Omni Robot` es un proyecto Open Source hecho para probar los conceptos de robotica especializada relacionado con controladores avanzados, motores driver, encoder y control asincrono basado en `SSH`
 
 - El raspberry pi 4 se encarga del control y orquestracion de movimientos del robot a travez de un script de Python
-- Se ejecuta la secuancia de configuracion de los motores los cuales podran acceder a las difentes acciones de movimiento (1-5)
+- Se ejecuta la secuencia de configuracion de los motores los cuales podran acceder a las difentes acciones de movimiento (1-5)
 
 ## Hardware Necesario
 
@@ -60,8 +61,8 @@
 - Raspberry Pi 4 Model B
 - Pololu M3H550 Triple Motor Driver
 - 3 x JGB37-520 motor dc
-- 3 x JGB37-520
-- Fuente de alimentación
+- 2 x baterias lipo
+= 2 x reguladores de voltaje
 - Protoboard
 - Cables jumper y terminales
 
@@ -69,7 +70,7 @@ Considerando la correcta implementacion, se debe consultar al manual y descripci
 
 **Siendo este una construccion especifica esperando un resultado final como este:**
 
-<img src="repo_assets/construccion_final.jpeg" alt="video-demo" width="600" height="450"/>
+<img src="repo_assets/construccion_final.jpg" alt="video-demo" width="600" height="450"/>
 
 ## Configuracion de entorno
 
@@ -107,7 +108,7 @@ $ sudo python robot.py
 
 La configuracion mas crucial del proyecto recaera en el uso del mismo siendo las opciones base del menu, todo ejecutado desde la shell con comandos simples ingresados por consola
 
-<img src="repo_assets/Controls.png" alt="video-demo" width="650" height="250"/>
+<img src="repo_assets/Controls.png" alt="video-demo" width="681" height="455"/>
 
 ## Tech Stack
 
@@ -140,7 +141,7 @@ El script está organizado en las siguientes secciones:
 #### Motoron
 
 - **Placa utilizada:** Motoron (controlador de motores DC vía I2C)
-- **Dirección I2C:** 16 (puede variar según configuración física)
+- **Dirección I2C:** 17 (puede variar según configuración física)
 - **Motores soportados:** 3
 
 #### Encoders
@@ -251,6 +252,9 @@ El script está organizado en las siguientes secciones:
 - **Ajustar los parámetros de aceleración y velocidad** según el peso y características del robot.
 - **Utilizar fuentes de alimentación adecuadas** para evitar caídas de voltaje.
 - **Probar individualmente cada motor y encoder** antes de pruebas completas.
+
+## Video funcionamiento
+<img src="repo_assets/funcionamiento.gif" alt="video-demo" width="468" height="403"/>
 
 [Maintained-shield]: https://img.shields.io/badge/Maintained%3F-yes-green.svg
 [Forks-shield]: https://img.shields.io/github/forks/NicoZela23/Omni-Motoron-Robot.svg
