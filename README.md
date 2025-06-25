@@ -263,8 +263,8 @@ Ahora, clonaremos el repositorio Omni-Motoron-Robot. Usaremos un comando para qu
 git clone https://github.com/NicoZela23/Omni-Motoron-Robot.git .
 ```
 
-[!NOTE]
-El . al final del comando git clone es importante, ya que evita la creación de una subcarpeta adicional y mantiene nuestra estructura de proyecto ordenada.
+>[!NOTE]
+> El . al final del comando git clone es importante, ya que evita la creación de una subcarpeta adicional y mantiene nuestra estructura de proyecto ordenada.
 
 ### Paso 3: Verificar la Estructura de Archivos
 
@@ -291,8 +291,8 @@ Esta estructura permite que el script `robot.py` importe la librería `motoron` 
 
 Finalmente, para poner el robot en marcha, ejecuta el script principal.
 
-[!IMPORTANT]
-Dado que el script necesita acceder directamente a los pines GPIO de la Raspberry Pi para leer los encoders, es probable que necesites ejecutarlo con privilegios de administrador usando sudo.
+>[!IMPORTANT]
+>Dado que el script necesita acceder directamente a los pines GPIO de la Raspberry Pi para leer los encoders, es probable que necesites ejecutarlo con privilegios de administrador usando sudo.
 
 ```bash
 sudo python3 robot.py
