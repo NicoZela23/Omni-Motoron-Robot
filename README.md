@@ -8,13 +8,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/NicoZela23/CV-Robotic-Claw">
-    <img src="repo_assets/Title.jpg" alt="Logo" width="185" height="218">
+    <img src="repo_assets/Title.jpg" alt="Logo" width="384" height="216">
   </a>
 
 <h3 align="center">Omni Robot</h3>
 
   <p align="center">
-    Motoron powered Robotic
+    Motoron powered Robotic Car
     <br />
     <a href="https://github.com/NicoZela23/Omni-Motoron-Robot/blob/main/README.md"><strong>Explora la documentacion »</strong></a>
     <br />
@@ -48,29 +48,74 @@
 
 ## Acerca Del Proyeto
 
-`Omni Robot` es un proyecto Open Source hecho para probar los conceptos de robotica especializada relacionado con controladores avanzados, motores driver, encoder y control asincrono basado en `SSH`
+`OmniRobot` es un proyecto de robótica de código abierto diseñado para construir y programar un robot móvil omnidireccional desde cero. Este repositorio no solo contiene el código de control, sino que también se basa en una guía de hardware detallada , pensada para guiar a usuarios sin experiencia previa en robótica o electrónica.
 
-- El raspberry pi 4 se encarga del control y orquestracion de movimientos del robot a travez de un script de Python
-- Se ejecuta la secuencia de configuracion de los motores los cuales podran acceder a las difentes acciones de movimiento (1-5)
+El robot utiliza un chasis triangular con tres ruedas omnidireccionales dispuestas a 120° , lo que le permite una movilidad completa en cualquier dirección: adelante, atrás, desplazamientos laterales, diagonales y rotación sobre su propio eje.
+
+El cerebro de la operación es una **_Raspberry Pi_** 4, que ejecuta un script en Python para orquestar todos los movimientos. El control preciso de los motores y la lectura de su velocidad se logran mediante componentes especializados, lo que convierte a este proyecto en una excelente plataforma de aprendizaje.
+
+---
+
+### Características Principales
+
+- **Control Centralizado**: Una **_Raspberry Pi 4 Model B_** (4GB RAM) se encarga de toda la lógica de alto nivel.
+
+- **Movimiento Omnidireccional**: Impulsado por tres motores DC JGB37-520 con encoders de efecto Hall integrados.
+
+- **Control de Potencia Avanzado**: Utiliza un driver Pololu M3H550 Triple Motor Driver, que se comunica con la **_Raspberry Pi_** a través del protocolo I2C para gestionar la velocidad y dirección de cada motor de forma independiente.
+
+- **Alimentación Autónoma**: El sistema es totalmente portátil, alimentado por dos baterías LiPo de 11.1V y reguladores de voltaje DC-DC para suministrar la energía necesaria tanto a la **_Raspberry Pi_** (5V) como a los motores (10.5V).
+
+- **Control Remoto**: El robot se opera de forma inalámbrica a través de una conexión SSH, permitiendo el control manual mediante el teclado de una laptop o PC.
+
+- **Software**: El control se implementa en un único script de Python, utilizando las librerías motoron para la comunicación con el driver y RPi.GPIO para la lectura de los encoders.
+
+---
+
+### ¿Qué aprenderás con este proyecto?
+
+- Ensamblar una estructura robótica mecánica a partir de perfiles de aluminio.
+
+- Conectar y controlar motores de corriente continua (DC) y leer su velocidad en tiempo real utilizando encoders.
+
+- Implementar un sistema de alimentación autónomo y seguro utilizando baterías LiPo y reguladores de voltaje.
+
+- Controlar hardware externo (un driver de motores) desde la Raspberry Pi utilizando el bus de comunicación I2C.
+
+- Desarrollar un script de control en Python que gestione entradas de usuario (teclado), procese datos de sensores (encoders) y actúe sobre los motores de forma concurrente.
 
 ## Hardware Necesario
 
 > [!IMPORTANT]
-> Este proyecto requiere de `Hardware` especifico tanto para ser construido como para ser usado, ademas de una estructura para sostener los motores.
+> Este proyecto requiere de Hardware específico tanto para su construcción como para su operación.  
+> La estructura principal se ensambla con perfiles de aluminio y soportes metálicos que sostienen los componentes.
 
-- Raspberry Pi 4 Model B
-- Pololu M3H550 Triple Motor Driver
-- 3 x JGB37-520 motor dc
-- 2 x baterias lipo
-= 2 x reguladores de voltaje
-- Protoboard
-- Cables jumper y terminales
+A continuación se detalla la lista completa de componentes electrónicos y estructurales utilizados:
 
-Considerando la correcta implementacion, se debe consultar al manual y descripcion en [Omni Robot Docs](https://drive.google.com/file/d/1BgFtPWnTz3hPScd1Ap16ELC2zDu8Rw9G/view?usp=sharing)
+| **Componente**         | **Cantidad** | **Modelo / Especificaciones**                                       |
+| ---------------------- | ------------ | ------------------------------------------------------------------- |
+| Microcontrolador       | 1            | Raspberry Pi 4 Model B (4GB RAM)                                    |
+| Controlador de Motor   | 1            | Pololu M3H550 Triple Motor Driver                                   |
+| Motores DC             | 3            | JGB37-520 con encoder de efecto Hall integrado (12V, 330 RPM)       |
+| Ruedas                 | 3            | Ruedas omnidireccionales de 60 mm con rodillos laterales            |
+| Baterías               | 2            | LiPo 3S (3 celdas) de 11.1V, 2200mAh (Marca Turnigy)                |
+| Reguladores de Voltaje | 2            | Regulador descendente (step-down) LM2596 DC-DC                      |
+| Chasis                 | 1            | Perfil de aluminio tipo ranurado (modelo 2020)                      |
+| Soportes de Motor      | 3            | Soporte metálico personalizado para fijación al chasis              |
+| Prototipado y Conexión | Varios       | Protoboard, cables jumper (macho-macho, hembra-hembra) y terminales |
+| Elementos de Fijación  | Varios       | Tornillos tipo Allen, tuercas en T, escuadras y arandelas           |
 
-**Siendo este una construccion especifica esperando un resultado final como este:**
+---
 
-<img src="repo_assets/construccion_final.jpg" alt="video-demo" width="600" height="450"/>
+> [!NOTE]
+> Para obtener los detalles completos sobre el ensamblaje, las conexiones eléctricas y los diagramas,  
+> es fundamental consultar la guía de construcción y el manual de hardware en [Omni Robot Docs](https://drive.google.com/file/d/1BgFtPWnTz3hPScd1Ap16ELC2zDu8Rw9G/view?usp=sharing).
+
+---
+
+### Resultado final de la construcción:
+
+<img src="./repo_assets/construccion_final.jpg" alt="hardware" width="600" height="450"/>
 
 ## Configuracion de entorno
 
@@ -254,6 +299,7 @@ El script está organizado en las siguientes secciones:
 - **Probar individualmente cada motor y encoder** antes de pruebas completas.
 
 ## Video funcionamiento
+
 <img src="repo_assets/funcionamiento.gif" alt="video-demo" width="468" height="403"/>
 
 [Maintained-shield]: https://img.shields.io/badge/Maintained%3F-yes-green.svg
