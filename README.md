@@ -35,13 +35,9 @@
     </li>
     <li><a href="#hardware-necesario">Hardware Necesario</a></li>
     <li><a href="#configuracion-de-entorno">Configuracion de entorno</a></li>
-    <li>
-      <a href="#descarga">Descarga</a>
-    </li>
-    <li><a href="#instalacion">Instalacion</a></li>
-    <li><a href="#configuracion-del-robot">Configuracion del robot</li>
-    <li><a href="#tech-stack">Tech Stack</a></li>
+    <li><a href="#instalacion-y-ejecucion">Instalacion y Ejecucion</a></li>
     <li><a href="#descripcion-tecnica">Descripcion tecnica</a></li>
+    <li><a href="#tech-stack">Tech Stack</a></li>
     <li><a href="#video-funcionamiento">Video funcionamiento</a></li>
   </ol>
 </details>
@@ -119,48 +115,190 @@ A continuación se detalla la lista completa de componentes electrónicos y estr
 
 ## Configuracion de entorno
 
-Considerando que el proyecto hace uso de la libreria `motoron` es importante instalar la misma, considerando que no esta disponible directamente desde `pip` esta debe ser integrada de la siguiente manera desde el raspberry pi
+Para replicar este proyecto, es necesario configurar una **Raspberry Pi 4** desde cero.  
+Los siguientes pasos te guiarán a través del proceso para dejar el equipo listo para clonar este repositorio y ejecutar el código.
+
+---
+
+### Paso 1: Instalar Raspberry Pi OS en la tarjeta SD
+
+La forma más sencilla de preparar el sistema operativo es usando la herramienta oficial **Raspberry Pi Imager**:
+
+1. Descarga e instala **Raspberry Pi Imager** en tu computadora desde la [web oficial de Raspberry Pi](https://www.raspberrypi.com/software/).
+2. Inserta una tarjeta **microSD** en tu computadora.
+3. Abre Raspberry Pi Imager y selecciona:
+
+   - **Raspberry Pi Device**: `Raspberry Pi 4`
+   - **Operating System**:  
+     `Raspberry Pi OS (other)` → `Raspberry Pi OS Lite (64-bit)`
+
+     > Se recomienda la versión _Lite_ (sin escritorio) para un mejor rendimiento en proyectos _headless_ (sin monitor).
+
+   - **Storage**: Selecciona tu tarjeta microSD.
+
+---
+
+### Paso 2: Pre-configuración del Sistema (_Headless Setup_)
+
+Antes de escribir la imagen en la SD, puedes **pre-configurar** los ajustes más importantes para un acceso remoto inmediato:
+
+1. En Raspberry Pi Imager, haz clic en el icono del engranaje ⚙️ para abrir el **menú de configuración avanzada**.
+2. Configura lo siguiente:
+
+   - `Set hostname`: Elige un nombre para tu robot, por ejemplo: `omnirobot.local`.
+   - `Enable SSH`: Marca esta opción y selecciona _Use password authentication_.
+   - `Set username and password`: Crea un usuario y contraseña para acceder a tu Raspberry Pi.
+   - `Configure wireless LAN`: Ingresa el **SSID** y contraseña de tu red Wi-Fi.
+   - `Set locale settings`: Configura tu zona horaria y la distribución del teclado.
+
+3. Guarda los cambios y haz clic en **WRITE** para flashear la tarjeta SD.
+
+---
+
+### Paso 3: Primer Arranque y Conexión SSH
+
+1. Expulsa la tarjeta **microSD** de tu computadora e insértala en la **Raspberry Pi**.
+2. Conecta la alimentación **USB-C** (se recomienda un cargador de **5V/3A**) para encenderla.
+3. Espera uno o dos minutos para que arranque y se conecte a tu red Wi-Fi.
+4. Desde otra computadora en la misma red, abre una terminal y conéctate usando **SSH**:
+
+```bash
+ssh tu_usuario@omnirobot.local
+```
+
+---
+
+### Paso 4: Actualizar Sistema y Habilitar Interfaces
+
+Una vez conectado por SSH, actualiza los paquetes del sistema y habilita la interfaz I2C:
+
+**Actualiza el sistema:**
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+**Abre la herramienta de configuracion**
+
+```bash
+sudo raspi-config
+```
+
+**Navega a:**
+
+```bash
+3 Interface Options → I5 I2C → <Yes>
+```
+
+**Esto habilitará el bus I2C.
+Luego, reinicia si es necesario:**
+
+```bash
+sudo reboot
+```
+
+---
+
+### Paso 5: Instalar Dependencias de Software
+
+El script en Python requiere git para clonar repositorios y la librería RPi.GPIO para controlar los pines.
+
+1. Conéctate nuevamente por SSH después del reinicio.
+2. Instala Git y pip:
+
+```bash
+sudo apt install git python3-pip -y
+```
+
+3. Instala la librería GPIO para Python:
+
+```bash
+pip install RPi.GPIO
+```
+
+---
+
+### Paso 6: Clonar la Librería `motoron`
+
+La librería motoron de Pololu no está disponible en pip, por lo que debe clonarse directamente desde GitHub.
+
+**Crea un directorio para el proyecto y entra en él:**
+
+```bash
+mkdir ~/omni_robot_project
+cd ~/omni_robot_project
+```
+
+**Clona la librería motoron dentro de este directorio:**
+
+```bash
+git clone https://github.com/pololu/motoron-python.git
+```
+
+Al tener la librería en la misma carpeta que tu script robot.py, Python podrá importarla directamente sin necesidad de una instalación global.
+
+## Instalacion y Ejecucion
+
+Esta sección asume que has completado todos los pasos de la sección **"Configuración de Entorno"**.  
+Ya deberías tener una Raspberry Pi configurada con las dependencias necesarias y la librería `motoron-python` clonada.
+
+El siguiente paso es descargar el código de control de este repositorio (**Omni-Motoron-Robot**) y ejecutarlo.
+
+---
+
+### Paso 1: Navegar al Directorio del Proyecto
+
+Asegúrate de estar en el directorio de trabajo creado en los pasos anteriores, donde ya se encuentra la librería de Pololu:
+
+```bash
+cd ~/omni_robot_project
+```
+
+### Paso 2: Clonar el Código del Proyecto
+
+Ahora, clonaremos el repositorio Omni-Motoron-Robot. Usaremos un comando para que los archivos (robot.py, README.md, etc.) se descarguen directamente en la carpeta actual, junto a la librería motoron-python.
+
+```bash
+git clone https://github.com/NicoZela23/Omni-Motoron-Robot.git .
+```
+
+[!NOTE]
+El . al final del comando git clone es importante, ya que evita la creación de una subcarpeta adicional y mantiene nuestra estructura de proyecto ordenada.
+
+### Paso 3: Verificar la Estructura de Archivos
+
+Después de clonar, la estructura de tu directorio omni_robot_project debería verse así:
 
 ```
-$ mkdir project_library
-$ cd project_library
-$ git pull https://github.com/pololu/motoron-python.git
+~/omni_robot_project/
+|
+|-- motoron-python/      <-- La librería de Pololu que ya estaba aquí.
+|   |-- motoron.py
+|   |-- examples/
+|   |-- ... (otros archivos de la librería)
+|
+|-- robot.py             <-- El script principal de control del robot.
+|
+|-- README.md            <-- El archivo README del proyecto.
+|
+|-- ... (otros archivos de tu repositorio)
 ```
 
-Con esto tendremos disponible toda la libreria junto con ejemplos de uso para los casos de us `motoron`
+Esta estructura permite que el script `robot.py` importe la librería `motoron` de forma natural, ya que se encuentran en el mismo directorio raíz del proyecto.
 
-## Descarga
+### Paso 4: Ejecutar el Script de Control
 
-> [!IMPORTANT]
-> Ya que esta libreria es especifica del fabricante `Pololu` para poder hacer uso de la libreria `motoron` debemos clonar este proyecto y extraer el script `robot.py` dentro de los archivos de la carpeta `motoron-python` donde se encuentran disponibles los archivos core
+Finalmente, para poner el robot en marcha, ejecuta el script principal.
 
-```
-$ cd project_library
-$ cd motoron-python
-$ git clone https://github.com/NicoZela23/Omni-Motoron-Robot.git
-$ mv Omni-Motoron-Robot/* .
-```
+[!IMPORTANT]
+Dado que el script necesita acceder directamente a los pines GPIO de la Raspberry Pi para leer los encoders, es probable que necesites ejecutarlo con privilegios de administrador usando sudo.
 
-## Instalacion
-
-El proyecto no requiere de una instalacion mas alla de la ejecucion del script de Python `robot.py`
-
-```
-$ sudo python robot.py
+```bash
+sudo python3 robot.py
 ```
 
-## Configuracion del robot
-
-La configuracion mas crucial del proyecto recaera en el uso del mismo siendo las opciones base del menu, todo ejecutado desde la shell con comandos simples ingresados por consola
-
-<img src="repo_assets/Controls.png" alt="video-demo" width="681" height="455"/>
-
-## Tech Stack
-
-[![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)]()
-[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()
-[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](https://www.python.org/)
-[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=fff)]()
+Al ejecutar el comando, verás el menú de control en la terminal. ¡Ya puedes empezar a mover tu robot usando las teclas `W, S, A, D, Q, E`
 
 ## Descripcion tecnica
 
@@ -297,6 +435,13 @@ El script está organizado en las siguientes secciones:
 - **Ajustar los parámetros de aceleración y velocidad** según el peso y características del robot.
 - **Utilizar fuentes de alimentación adecuadas** para evitar caídas de voltaje.
 - **Probar individualmente cada motor y encoder** antes de pruebas completas.
+
+## Tech Stack
+
+[![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)]()
+[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)]()
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](https://www.python.org/)
+[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=fff)]()
 
 ## Video funcionamiento
 
